@@ -3,7 +3,7 @@
 ###controller
 * developer/report
 * backend/report
-* 
+
 ###model
 * developer/report_model
 * backend/report_model
@@ -17,6 +17,7 @@
 
 ###controller
 * developer/theme/add
+
 ###model
 
 ###view
