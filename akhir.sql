@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.12
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2015 at 12:38 AM
--- Server version: 5.6.16
--- PHP Version: 5.5.11
+-- Generation Time: May 26, 2015 at 06:36 AM
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -31,9 +31,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
   `ip_address` varchar(16) NOT NULL DEFAULT '0',
   `user_agent` varchar(120) NOT NULL,
   `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_data` text NOT NULL,
-  PRIMARY KEY (`session_id`),
-  KEY `last_activity_idx` (`last_activity`)
+  `user_data` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -41,9 +39,8 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('41ce9222340c78b44d3b56cc3fd9e551', '::1', 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36', 1431868912, ''),
-('6bafe4f19e07e2f8ac6422799749bc79', '::1', 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.152 Safari/537.36', 1431986004, 'a:12:{s:9:"user_data";s:0:"";s:12:"developer_id";s:1:"2";s:15:"developer_uname";s:7:"bintang";s:13:"developer_pwd";s:32:"801dc3c9e3bcd2a3cf428f3b79b312b6";s:14:"developer_name";s:7:"bintang";s:15:"developer_email";s:21:"bintang.dev@gmail.com";s:16:"developer_kontak";s:0:"";s:17:"developer_address";s:0:"";s:13:"developer_bio";s:0:"";s:15:"developer_image";s:0:"";s:26:"developer_theme_collection";s:1:"0";s:19:"developer_logged_in";b:1;}'),
-('75f6c26ae3f4621e164326f3147dce34', '::1', 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36', 1431523824, 'a:12:{s:9:"user_data";s:0:"";s:12:"developer_id";s:1:"2";s:15:"developer_uname";s:7:"bintang";s:13:"developer_pwd";s:32:"801dc3c9e3bcd2a3cf428f3b79b312b6";s:14:"developer_name";s:7:"bintang";s:15:"developer_email";s:21:"bintang.dev@gmail.com";s:16:"developer_kontak";s:0:"";s:17:"developer_address";s:0:"";s:13:"developer_bio";s:0:"";s:15:"developer_image";s:0:"";s:26:"developer_theme_collection";s:1:"0";s:19:"developer_logged_in";b:1;}');
+('08e34b5a7ddcc66fa726ff7683a3d04f', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36', 1432603683, ''),
+('20ddfff28ecae70add911fe6f1f88d7e', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36', 1432611705, 'a:7:{s:9:"user_data";s:0:"";s:7:"user_id";s:2:"21";s:9:"user_name";s:13:"Administrator";s:10:"user_email";s:22:"admin@ngunduhmantu.com";s:13:"user_username";s:5:"admin";s:13:"user_password";s:32:"21232f297a57a5a743894a0e4a801fc3";s:9:"logged_in";b:1;}');
 
 -- --------------------------------------------------------
 
@@ -52,22 +49,23 @@ INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activ
 --
 
 CREATE TABLE IF NOT EXISTS `nm_approvals` (
-  `approval_id` int(11) NOT NULL AUTO_INCREMENT,
+`approval_id` int(11) NOT NULL,
   `approval_date` date NOT NULL,
   `approval_total` int(10) NOT NULL,
   `approval_message` text NOT NULL,
   `approval_status` int(1) NOT NULL,
-  `request_id` varchar(10) NOT NULL,
-  PRIMARY KEY (`approval_id`),
-  KEY `request_id` (`request_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+  `request_id` varchar(10) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `nm_approvals`
 --
 
 INSERT INTO `nm_approvals` (`approval_id`, `approval_date`, `approval_total`, `approval_message`, `approval_status`, `request_id`) VALUES
-(8, '2015-05-13', 0, ' ', 1, 'RQ21268261');
+(8, '2015-05-13', 0, ' ', 1, 'RQ21268261'),
+(9, '2015-05-22', 0, ' ', 1, 'RQ21414352'),
+(10, '2015-05-24', 0, ' ', 1, 'RQ21431031'),
+(11, '2015-05-24', 0, ' ', 1, 'RQ21431052');
 
 -- --------------------------------------------------------
 
@@ -76,15 +74,14 @@ INSERT INTO `nm_approvals` (`approval_id`, `approval_date`, `approval_total`, `a
 --
 
 CREATE TABLE IF NOT EXISTS `nm_customers` (
-  `customer_id` int(4) NOT NULL AUTO_INCREMENT,
+`customer_id` int(4) NOT NULL,
   `customer_name` varchar(32) NOT NULL,
   `customer_uname` varchar(12) NOT NULL,
   `customer_pwd` varchar(32) NOT NULL,
   `customer_phone` varchar(12) NOT NULL,
   `customer_email` varchar(32) NOT NULL,
-  `customer_address` text NOT NULL,
-  PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `customer_address` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `nm_customers`
@@ -100,7 +97,7 @@ INSERT INTO `nm_customers` (`customer_id`, `customer_name`, `customer_uname`, `c
 --
 
 CREATE TABLE IF NOT EXISTS `nm_developers` (
-  `developer_id` int(10) NOT NULL AUTO_INCREMENT,
+`developer_id` int(10) NOT NULL,
   `developer_uname` varchar(12) NOT NULL,
   `developer_pwd` varchar(32) NOT NULL,
   `developer_name` varchar(32) NOT NULL,
@@ -109,10 +106,8 @@ CREATE TABLE IF NOT EXISTS `nm_developers` (
   `developer_address` text NOT NULL,
   `developer_bio` text NOT NULL,
   `developer_image` varchar(32) NOT NULL,
-  `developer_theme_collection` int(11) NOT NULL,
-  PRIMARY KEY (`developer_id`),
-  UNIQUE KEY `developer_uname` (`developer_uname`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `developer_theme_collection` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `nm_developers`
@@ -131,12 +126,7 @@ CREATE TABLE IF NOT EXISTS `nm_orders` (
   `order_id` varchar(12) NOT NULL,
   `customer_id` int(4) NOT NULL,
   `payment_id` int(11) NOT NULL,
-  `order_date` date NOT NULL,
-  PRIMARY KEY (`order_id`),
-  KEY `buyers_id` (`customer_id`),
-  KEY `buy_date` (`order_date`),
-  KEY `payment_id` (`payment_id`),
-  KEY `payment_id_2` (`payment_id`)
+  `order_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -147,6 +137,9 @@ INSERT INTO `nm_orders` (`order_id`, `customer_id`, `payment_id`, `order_date`) 
 ('OR11212313', 1, 1, '2015-01-13'),
 ('OR114134114', 1, 3, '2015-01-15'),
 ('OR114135617', 1, 4, '2015-01-15'),
+('OR11414338', 1, 5, '2015-05-22'),
+('OR114152051', 1, 6, '2015-05-22'),
+('OR11445038', 1, 7, '2015-05-25'),
 ('OR11452918', 1, 2, '2015-01-15');
 
 -- --------------------------------------------------------
@@ -156,13 +149,19 @@ INSERT INTO `nm_orders` (`order_id`, `customer_id`, `payment_id`, `order_date`) 
 --
 
 CREATE TABLE IF NOT EXISTS `nm_order_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `order_id` varchar(12) NOT NULL,
-  `theme_id` varchar(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `order_id` (`order_id`),
-  KEY `theme_id` (`theme_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `theme_id` varchar(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `nm_order_detail`
+--
+
+INSERT INTO `nm_order_detail` (`id`, `order_id`, `theme_id`) VALUES
+(1, 'OR11212313', 'TH212682615'),
+(2, 'OR114152051', 'TH212682615'),
+(3, 'OR11445038', 'TH212682615');
 
 -- --------------------------------------------------------
 
@@ -171,23 +170,25 @@ CREATE TABLE IF NOT EXISTS `nm_order_detail` (
 --
 
 CREATE TABLE IF NOT EXISTS `nm_payments` (
-  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
+`payment_id` int(11) NOT NULL,
   `payment_date` date NOT NULL,
   `payment_total` int(11) NOT NULL,
   `payment_message` text NOT NULL,
-  `payment_status` int(1) NOT NULL,
-  PRIMARY KEY (`payment_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+  `payment_status` int(1) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `nm_payments`
 --
 
 INSERT INTO `nm_payments` (`payment_id`, `payment_date`, `payment_total`, `payment_message`, `payment_status`) VALUES
-(1, '0000-00-00', 20000, '', 0),
+(1, '2015-05-22', 20000, ' ', 2),
 (2, '0000-00-00', 20000, '', 0),
 (3, '0000-00-00', 80000, '', 0),
-(4, '0000-00-00', 130000, '', 0);
+(4, '0000-00-00', 130000, '', 0),
+(5, '0000-00-00', 1000000, '', 0),
+(6, '2015-05-22', 1000000, ' ', 2),
+(7, '2015-05-25', 1000000, ' udah ane bayar gan', 2);
 
 -- --------------------------------------------------------
 
@@ -199,10 +200,7 @@ CREATE TABLE IF NOT EXISTS `nm_requests` (
   `request_id` varchar(10) NOT NULL,
   `theme_id` varchar(11) NOT NULL,
   `request_date` date NOT NULL,
-  `request_status` int(1) NOT NULL,
-  PRIMARY KEY (`request_id`),
-  KEY `invitation_id` (`theme_id`),
-  KEY `invitation_id_2` (`theme_id`)
+  `request_status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -210,7 +208,10 @@ CREATE TABLE IF NOT EXISTS `nm_requests` (
 --
 
 INSERT INTO `nm_requests` (`request_id`, `theme_id`, `request_date`, `request_status`) VALUES
-('RQ21268261', 'TH212682615', '2015-05-07', 1);
+('RQ21268261', 'TH212682615', '2015-05-07', 1),
+('RQ21414352', 'TH214143520', '2015-05-22', 1),
+('RQ21431031', 'TH214310312', '2015-05-24', 1),
+('RQ21431052', 'TH214310523', '2015-05-24', 1);
 
 -- --------------------------------------------------------
 
@@ -241,9 +242,7 @@ CREATE TABLE IF NOT EXISTS `nm_theme` (
   `theme_agrement` varchar(32) NOT NULL,
   `theme_status` int(1) NOT NULL,
   `theme_price` int(9) NOT NULL,
-  `developer_id` int(10) NOT NULL,
-  PRIMARY KEY (`theme_id`),
-  KEY `developer_id` (`developer_id`)
+  `developer_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -251,7 +250,10 @@ CREATE TABLE IF NOT EXISTS `nm_theme` (
 --
 
 INSERT INTO `nm_theme` (`theme_id`, `theme_name`, `theme_description`, `theme_preview`, `theme_images`, `theme_files`, `theme_category`, `theme_resolution`, `theme_widget`, `theme_compatibility`, `theme_framework`, `theme_wp_version`, `theme_files_included`, `theme_column`, `theme_layout`, `theme_demo_url`, `theme_usulan_harga`, `theme_tags`, `theme_msg_reviewer`, `theme_agrement`, `theme_status`, `theme_price`, `developer_id`) VALUES
-('TH212682615', 'karatok', ' lorem ipsum dolor si amet  lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n \r\n', '', '', 'InstalasiThemeSandalJepit.zip', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 1000000, 2);
+('TH212682615', 'karatok', ' lorem ipsum dolor si amet  lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n lorem ipsum dolor si amet \r\n \r\n', '', 'CSS3.jpg', 'InstalasiThemeSandalJepit.zip', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 1000000, 2),
+('TH214143520', 'wak wak', 'askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  askdfj kasjfka askdfj aksdjfa ksdfjaksjfd aksjfdaksjfd aksjfdaksjfdaksdfj  ', '', 'css3-html5-logo-initial.png', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 1200000, 2),
+('TH214310312', 'Theme New', 'New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  New Themes  ', '', 'blackberry.png', 'mysql-connector-java-5.0.8.zip', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 4000000, 2),
+('TH214310523', 'New New', 'Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  Themes New New  ', '', 'ms office.png', 'Abstrak_Buku.docx', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 2100000, 2);
 
 -- --------------------------------------------------------
 
@@ -260,14 +262,13 @@ INSERT INTO `nm_theme` (`theme_id`, `theme_name`, `theme_description`, `theme_pr
 --
 
 CREATE TABLE IF NOT EXISTS `nm_tickets` (
-  `id_ticket` int(10) NOT NULL AUTO_INCREMENT,
+`id_ticket` int(10) NOT NULL,
   `ticket_subjects` varchar(32) NOT NULL,
   `ticket_content` text NOT NULL,
   `ticket_date` date NOT NULL,
   `ticket_categories` varchar(65) NOT NULL,
-  `developer_id` int(10) NOT NULL,
-  PRIMARY KEY (`id_ticket`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `developer_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -276,15 +277,12 @@ CREATE TABLE IF NOT EXISTS `nm_tickets` (
 --
 
 CREATE TABLE IF NOT EXISTS `nm_users` (
-  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`user_id` int(10) unsigned NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `user_email` varchar(50) NOT NULL DEFAULT '',
   `user_username` varchar(50) NOT NULL,
-  `user_password` varchar(60) NOT NULL DEFAULT '',
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_email` (`user_email`),
-  UNIQUE KEY `user_username` (`user_username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+  `user_password` varchar(60) NOT NULL DEFAULT ''
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `nm_users`
@@ -307,6 +305,115 @@ INSERT INTO `nm_users` (`user_id`, `user_name`, `user_email`, `user_username`, `
 (22, 'karatok', 'karatok@gmail.com', 'karatok', '857cd27627f86e975df99a28c405500f');
 
 --
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `ci_sessions`
+--
+ALTER TABLE `ci_sessions`
+ ADD PRIMARY KEY (`session_id`), ADD KEY `last_activity_idx` (`last_activity`);
+
+--
+-- Indexes for table `nm_approvals`
+--
+ALTER TABLE `nm_approvals`
+ ADD PRIMARY KEY (`approval_id`), ADD KEY `request_id` (`request_id`);
+
+--
+-- Indexes for table `nm_customers`
+--
+ALTER TABLE `nm_customers`
+ ADD PRIMARY KEY (`customer_id`);
+
+--
+-- Indexes for table `nm_developers`
+--
+ALTER TABLE `nm_developers`
+ ADD PRIMARY KEY (`developer_id`), ADD UNIQUE KEY `developer_uname` (`developer_uname`);
+
+--
+-- Indexes for table `nm_orders`
+--
+ALTER TABLE `nm_orders`
+ ADD PRIMARY KEY (`order_id`), ADD KEY `buyers_id` (`customer_id`), ADD KEY `buy_date` (`order_date`), ADD KEY `payment_id` (`payment_id`), ADD KEY `payment_id_2` (`payment_id`);
+
+--
+-- Indexes for table `nm_order_detail`
+--
+ALTER TABLE `nm_order_detail`
+ ADD PRIMARY KEY (`id`), ADD KEY `order_id` (`order_id`), ADD KEY `theme_id` (`theme_id`);
+
+--
+-- Indexes for table `nm_payments`
+--
+ALTER TABLE `nm_payments`
+ ADD PRIMARY KEY (`payment_id`);
+
+--
+-- Indexes for table `nm_requests`
+--
+ALTER TABLE `nm_requests`
+ ADD PRIMARY KEY (`request_id`), ADD KEY `invitation_id` (`theme_id`), ADD KEY `invitation_id_2` (`theme_id`);
+
+--
+-- Indexes for table `nm_theme`
+--
+ALTER TABLE `nm_theme`
+ ADD PRIMARY KEY (`theme_id`), ADD KEY `developer_id` (`developer_id`);
+
+--
+-- Indexes for table `nm_tickets`
+--
+ALTER TABLE `nm_tickets`
+ ADD PRIMARY KEY (`id_ticket`);
+
+--
+-- Indexes for table `nm_users`
+--
+ALTER TABLE `nm_users`
+ ADD PRIMARY KEY (`user_id`), ADD UNIQUE KEY `user_email` (`user_email`), ADD UNIQUE KEY `user_username` (`user_username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `nm_approvals`
+--
+ALTER TABLE `nm_approvals`
+MODIFY `approval_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `nm_customers`
+--
+ALTER TABLE `nm_customers`
+MODIFY `customer_id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `nm_developers`
+--
+ALTER TABLE `nm_developers`
+MODIFY `developer_id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `nm_order_detail`
+--
+ALTER TABLE `nm_order_detail`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `nm_payments`
+--
+ALTER TABLE `nm_payments`
+MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `nm_tickets`
+--
+ALTER TABLE `nm_tickets`
+MODIFY `id_ticket` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `nm_users`
+--
+ALTER TABLE `nm_users`
+MODIFY `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+--
 -- Constraints for dumped tables
 --
 
@@ -314,33 +421,33 @@ INSERT INTO `nm_users` (`user_id`, `user_name`, `user_email`, `user_username`, `
 -- Constraints for table `nm_approvals`
 --
 ALTER TABLE `nm_approvals`
-  ADD CONSTRAINT `nm_approvals_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `nm_requests` (`request_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `nm_approvals_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `nm_requests` (`request_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `nm_orders`
 --
 ALTER TABLE `nm_orders`
-  ADD CONSTRAINT `nm_orders_ibfk_4` FOREIGN KEY (`customer_id`) REFERENCES `nm_customers` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `nm_orders_ibfk_5` FOREIGN KEY (`payment_id`) REFERENCES `nm_payments` (`payment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `nm_orders_ibfk_4` FOREIGN KEY (`customer_id`) REFERENCES `nm_customers` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `nm_orders_ibfk_5` FOREIGN KEY (`payment_id`) REFERENCES `nm_payments` (`payment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `nm_order_detail`
 --
 ALTER TABLE `nm_order_detail`
-  ADD CONSTRAINT `nm_order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `nm_orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `nm_order_detail_ibfk_2` FOREIGN KEY (`theme_id`) REFERENCES `nm_theme` (`theme_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `nm_order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `nm_orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `nm_order_detail_ibfk_2` FOREIGN KEY (`theme_id`) REFERENCES `nm_theme` (`theme_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `nm_requests`
 --
 ALTER TABLE `nm_requests`
-  ADD CONSTRAINT `nm_requests_ibfk_4` FOREIGN KEY (`theme_id`) REFERENCES `nm_theme` (`theme_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `nm_requests_ibfk_4` FOREIGN KEY (`theme_id`) REFERENCES `nm_theme` (`theme_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `nm_theme`
 --
 ALTER TABLE `nm_theme`
-  ADD CONSTRAINT `nm_theme_ibfk_1` FOREIGN KEY (`developer_id`) REFERENCES `nm_developers` (`developer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `nm_theme_ibfk_1` FOREIGN KEY (`developer_id`) REFERENCES `nm_developers` (`developer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
