@@ -62,6 +62,8 @@
                         <li <?php if ($this->uri->segment(2)=='report' AND $this->uri->segment(3)=='themes') echo 'class="active"'; ?>><a href="<?php echo base_url('developer/report/themes'); ?>">All Themes Sold</a></li>
                         <li <?php if ($this->uri->segment(2)=='report' AND $this->uri->segment(3)=='permonth') echo 'class="active"'; ?>><a href="<?php echo base_url('developer/report/permonth'); ?>">Themes Per Month</a></li>
                         <li <?php if ($this->uri->segment(2)=='report' AND $this->uri->segment(3)=='peryear') echo 'class="active"'; ?>><a href="<?php echo base_url('developer/report/peryear'); ?>">Themes Per Year</a></li>
+                        <li <?php if ($this->uri->segment(2)=='report' AND $this->uri->segment(3)=='income_permonth') echo 'class="active"'; ?>><a href="<?php echo base_url('developer/report/income_permonth'); ?>">Income Per Month</a></li>
+                        <li <?php if ($this->uri->segment(2)=='report' AND $this->uri->segment(3)=='income_peryear') echo 'class="active"'; ?>><a href="<?php echo base_url('developer/report/income_peryear'); ?>">Income Per Year</a></li>
                     </ul>
                 </div>
             </div>

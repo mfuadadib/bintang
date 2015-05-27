@@ -21,21 +21,24 @@ class Report_model extends CI_Model {
 	
 	public function themes($value, $offset,$type) {
 		if($type == 0){//untuk laporan keseluruhan
-			$this->db->select('*,count(nm_theme.theme_id) as total');
-		}else if($type == 1){//1 untuk laporan perbulan
-			$this->db->select('*,count(nm_theme.theme_id) as total,year(nm_orders.order_date) as tahun,month(nm_orders.order_date) as bulan');
-		}else if($type == 2){
-			$this->db->select('*,count(nm_theme.theme_id) as total,year(nm_orders.order_date) as tahun');
+			$this->db->select('*,count(nm_theme.theme_id) as total,sum(nm_theme.theme_price)as total_harga');
+		}else if(in_array($type,[1,3])){//1 untuk laporan perbulan dan untuk income perbulan
+			$this->db->select('*,count(nm_theme.theme_id) as total,sum(nm_theme.theme_price)as total_harga,year(nm_orders.order_date) as tahun,month(nm_orders.order_date) as bulan');
+		}else if(in_array($type,[2,4])){//2 untuk laporan pertahun dan untuk income pertahun
+			$this->db->select('*,count(nm_theme.theme_id) as total,sum(nm_theme.theme_price)as total_harga,year(nm_orders.order_date) as tahun');
 		}
         $this->db->where(['nm_payments.payment_status'=>2,'nm_theme.developer_id'=>$this->session->userdata('developer_id')]);
 		$this->db->join('nm_payments','nm_payments.payment_id=nm_orders.payment_id');
 		$this->db->join('nm_order_detail','nm_order_detail.order_id=nm_orders.order_id');
 		$this->db->join('nm_theme','nm_theme.theme_id=nm_order_detail.theme_id');
-		$this->db->group_by('nm_theme.theme_id');
-		if($type == 1){
+		if(!in_array($type,[3,4])){//jika bukan income group berdasarkan themes
+			$this->db->group_by('nm_theme.theme_id');
+		}
+		
+		if(in_array($type,[1,3])){
 			$this->db->group_by('tahun');
 			$this->db->group_by('bulan');
-		}else if($type ==2){
+		}else if(in_array($type,[2,4])){
 			$this->db->group_by('tahun');
 		}
 		$this->db->limit($value, $offset);
